@@ -7,9 +7,22 @@ const messageRoute = require("./Routes/messageRoute");
 
 const app = express();
 require("dotenv").config();
+const clientUrl = process.env.CLIENT_URL;
 
 app.use(express.json());
-app.use(cors());
+
+app.use(
+  cors({
+    origin: clientUrl,
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+  })
+);
+
+app.use(express.json());
+
+// app.use(cors());
+
 app.use("/api/users", userRoute);
 app.use("/api/chats", chatRoute);
 app.use("/api/messages", messageRoute);
